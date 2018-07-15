@@ -21,8 +21,10 @@ class Recipes extends PureComponent {
     this.Recipe.on('value', (recipe) => {
       this.setState({ recipe: { id: recipe.key, ...recipe.val() } }, () => {
         this.Ingredient.on('child_added', (snap) => {
+          const { recipe: theRecipe } = this.state;
           const ingredient = snap.val();
           if (!ingredient) return;
+          if (ingredient.recipeId !== theRecipe.id) return;
           const newIngredient = { id: snap.key, ...ingredient };
           this.setState(prevState => ({ ingredients: [...prevState.ingredients, newIngredient] }));
         });
