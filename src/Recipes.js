@@ -55,7 +55,7 @@ Recipes
         </p>
         <form onSubmit={this.addRecipe}>
           <input name="name" type="text" />
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Create Recipe" />
         </form>
         <div>
           <h1>
