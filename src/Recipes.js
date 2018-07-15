@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { Redirect } from 'react-router-dom';
 import firebase from './Firebase';
 
 import RecipeCard from './RecipeCard';
@@ -9,6 +10,7 @@ class Recipes extends PureComponent {
 
     this.state = {
       recipes: [],
+      recipeRoute: null,
     };
 
     this.addRecipe = this.addRecipe.bind(this);
@@ -39,6 +41,9 @@ class Recipes extends PureComponent {
       name: e.target.name.value,
     };
     this.Recipe.push(newRecipeObject)
+      .then((data) => {
+        this.setState({ recipeRoute: data.key });
+      })
       .catch((error) => {
         alert(error);
         console.error(error);
@@ -46,7 +51,9 @@ class Recipes extends PureComponent {
   }
 
   render() {
-    const { recipes } = this.state;
+    const { recipes, recipeRoute } = this.state;
+
+    if (recipeRoute) return <Redirect to={`/${recipeRoute}`} />;
 
     return (
       <div>
