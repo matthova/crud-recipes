@@ -15,7 +15,14 @@ class Recipes extends PureComponent {
     this.addFirebase = this.addFirebase.bind(this);
 
     this.Recipe = firebase.database().ref('Recipe');
+  }
+
+  componentDidMount() {
     this.Recipe.on('child_added', this.addFirebase);
+  }
+
+  componentWillUnmount() {
+    this.Recipe.off('child_added');
   }
 
   addFirebase(snap) {
